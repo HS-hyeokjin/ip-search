@@ -1,7 +1,6 @@
 package api;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import dto.response.IpInfoResponseDto;
 import config.PropertiesLoader;
 import resolver.DomainResolver;
@@ -42,11 +41,10 @@ public class Ip2LocationApi {
 
                 return response.toString();
             } else {
-                System.out.println("요청 실패: " + responseCode);
+                System.out.println("IP 요청 실패: " + responseCode);
                 return null;
             }
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
