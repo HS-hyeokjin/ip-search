@@ -15,15 +15,15 @@ public class GoogleMapApi {
     private static final String API_KEY = propertiesLoader.getGoogleApiKey();
 
     public void searchPointMap(IpInfoResponseDto location) {
-        try {
-            String imageURL = String.format(
-                    "https://maps.googleapis.com/maps/api/staticmap?center=%f,%f&zoom=15&size=500x500&maptype=roadmap&markers=color:red%%7Clabel:C%%7C%f,%f&key=%s",
-                    location.getLatitude(), location.getLongitude(), location.getLatitude(), location.getLongitude(), API_KEY
-            );
 
+        String imageURL = String.format(
+                "https://maps.googleapis.com/maps/api/staticmap?center=%f,%f&zoom=15&size=1000x600&maptype=roadmap&markers=color:red%%7Clabel:C%%7C%f,%f&key=%s",
+                location.getLatitude(), location.getLongitude(), location.getLatitude(), location.getLongitude(), API_KEY
+        );
+        try {
             URL url = new URL(imageURL);
             InputStream is = url.openStream();
-            OutputStream os = new FileOutputStream("map.png");
+            OutputStream os = new FileOutputStream("map.jpg");
             byte[] b = new byte[2048];
             int length;
             while ((length = is.read(b)) != -1) {
@@ -32,17 +32,16 @@ public class GoogleMapApi {
             is.close();
             os.close();
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println("이미지 로드 실패");
         }
     }
 
     public ImageIcon getMap() {
-        return new ImageIcon((new ImageIcon("map.png")).getImage().getScaledInstance(500, 500, java.awt.Image.SCALE_SMOOTH));
+        return new ImageIcon((new ImageIcon("map.jpg")).getImage().getScaledInstance(600, 550, java.awt.Image.SCALE_SMOOTH));
     }
 
     public void fileDelete() {
-        File file = new File("map.png");
+        File file = new File("map.jpg");
         file.delete();
     }
 }
